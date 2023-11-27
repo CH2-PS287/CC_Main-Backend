@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  userData UserData?
+  userFood UserFood[]
+  userExcerise UserExcerise[]
+}
+
+model UserData {
+  id Int @id @default(autoincrement())
+  full_name String
+	birth_date DateTime
+	height Float
+	weight Float
+	gender Boolean
+	recommended_calorie Int
+
+  user User @relation(fields: [userId], references: [id])
+  userId Int @unique
+}
+
+model Food {
+  id Int @id @default(autoincrement())
+  name String
+  calorie Float
+  mineral Float
+  protein Float
+  fiber Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userFood UserFood[]
+}
+
+model Excerise {
+  id Int @id @default(autoincrement())
+  name String
+  calorie Float
+  unit String
+
+  createdAt DateTime @default(now())
+
+  userExcerise UserExcerise[]
+}
+
+model UserFood {
+  id Int @id @default(autoincrement())
+  timestamp DateTime
+  amount Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+
+  food Food @relation(fields: [foodId], references: [id])
+  foodId Int
+}
+
+model UserExcerise {
+  id Int @id @default(autoincrement())
+  timestamp DateTime
+  amount Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+
+  excerise Excerise @relation(fields: [exceriseId], references: [id])
+  exceriseId Int
+}
+
