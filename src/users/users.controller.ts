@@ -23,7 +23,7 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(new JwtAuthGuard(['admin', 'user']))
   @Get('profile')
   getProfile(@Request() req: any) {
     const { id } = req.user;

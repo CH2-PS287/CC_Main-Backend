@@ -5,12 +5,14 @@ import { UsersModule } from '../users/users.module';
 import { UsersService } from '../users/users.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtService } from '@nestjs/jwt';
+import { JwtAuthGuard } from './jwt-auth.guard';
 import { JwtStrategy } from './jwt.strategy';
 import { jwtConstants } from './constants';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule,
     UsersModule,
     PassportModule,
     JwtModule.register({
@@ -20,11 +22,11 @@ import { jwtConstants } from './constants';
   ],
   providers: [
     AuthService,
-    JwtService,
     UsersService,
     LocalStrategy,
     JwtStrategy,
+    JwtAuthGuard,
   ],
-  exports: [AuthService],
+  exports: [AuthService, JwtAuthGuard],
 })
 export class AuthModule {}
