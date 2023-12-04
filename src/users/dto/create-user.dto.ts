@@ -43,32 +43,3 @@ export class CreateUserDto {
   @IsNumber()
   recommended_calorie: number;
 }
-
-/**
- * model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-
-  userData UserData?
-  userFood UserFood[]
-  userExcerise UserExcerise[]
-  userWeight UserWeight[]
-}
-
-model UserData {
-  id Int @id @default(autoincrement())
-  full_name String
-	birth_date DateTime
-	height Float
-	weight Float
-	gender Gender
-	recommended_calorie Int
-
-  user User @relation(fields: [userId], references: [id])
-  userId Int @unique
-}
- */

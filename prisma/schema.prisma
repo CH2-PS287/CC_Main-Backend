@@ -20,8 +20,10 @@ model User {
 
   userData UserData?
   userFood UserFood[]
-  userExcerise UserExcerise[]
+  userExercise UserExercise[]
   userWeight UserWeight[]
+
+  @@map("users")
 }
 
 model UserData {
@@ -35,6 +37,8 @@ model UserData {
 
   user User @relation(fields: [userId], references: [id])
   userId String @unique
+
+  @@map("user_data")
 }
 
 model Food {
@@ -49,9 +53,11 @@ model Food {
   updatedAt DateTime @updatedAt
 
   userFood UserFood[]
+
+  @@map("foods")
 }
 
-model Excerise {
+model Exercise {
   id String @id @default(uuid())
   name String
   calorie Float
@@ -59,7 +65,9 @@ model Excerise {
 
   createdAt DateTime @default(now())
 
-  userExcerise UserExcerise[]
+  userExercise UserExercise[]
+
+  @@map("exercises")
 }
 
 model UserFood {
@@ -74,9 +82,11 @@ model UserFood {
 
   food Food @relation(fields: [foodId], references: [id])
   foodId String
+
+  @@map("user_foods")
 }
 
-model UserExcerise {
+model UserExercise {
   id String @id @default(uuid())
   timestamp DateTime
   amount Float
@@ -86,8 +96,10 @@ model UserExcerise {
   user User @relation(fields: [userId], references: [id])
   userId String
 
-  excerise Excerise @relation(fields: [exceriseId], references: [id])
-  exceriseId String
+  exercise Exercise @relation(fields: [exerciseId], references: [id])
+  exerciseId String
+
+  @@map("user_exercises")
 }
 
 model UserWeight {
@@ -100,6 +112,8 @@ model UserWeight {
 
   user User @relation(fields: [userId], references: [id])
   userId String
+
+  @@map("user_weights")
 }
 
 enum Gender {
