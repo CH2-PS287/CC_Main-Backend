@@ -6,9 +6,14 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { FoodsModule } from './foods/foods.module';
 import { ExercisesModule } from './exercises/exercises.module';
+import { AuthModule } from './auth/auth.module';
+import { AuthService } from './auth/auth.service';
+import { UsersService } from './users/users.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
+    AuthModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -18,6 +23,6 @@ import { ExercisesModule } from './exercises/exercises.module';
     ExercisesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AuthService, UsersService, JwtService],
 })
 export class AppModule {}
