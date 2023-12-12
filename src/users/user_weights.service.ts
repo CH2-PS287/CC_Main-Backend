@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 import { CreateUserWeightDto } from './dto/create-user-weight.dto';
+import { UpdateUserWeightDto } from './dto/update-user-weight.dto';
 
 @Injectable()
 export class UserWeightsService {
@@ -21,18 +22,30 @@ export class UserWeightsService {
     });
   }
 
-  async findAll() {
+  async findAll(userId: string) {
     return this.prisma.userWeight.findMany({
-      include: {
-        user: true,
+      where: {
+        userId: userId,
       },
     });
   }
 
   async findOne(id: string) {
-    return this.prisma.userWeight.findUnique({
+    return this.prisma.userWeight.findUniqueOrThrow({
       where: {
         id: id,
+      },
+    });
+  }
+
+  async update(id: string, updateUserWeightDto: UpdateUserWeightDto) {
+    return this.prisma.userWeight.update({
+      where: {
+        id: id,
+      },
+      data: {
+        timestamp: updateUserWeightDto.timestamp,
+        weight: updateUserWeightDto.weight,
       },
     });
   }

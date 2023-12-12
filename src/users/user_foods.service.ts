@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserFoodDto } from './dto/create-user-food.dto';
+import { UpdateUserFoodDto } from './dto/update-user-food.dto';
 
 @Injectable()
 export class UserFoodsService {
@@ -25,10 +26,10 @@ export class UserFoodsService {
     });
   }
 
-  async findAll() {
+  async findAll(userId: string) {
     return this.prisma.userFood.findMany({
-      include: {
-        user: true,
+      where: {
+        userId: userId,
       },
     });
   }
@@ -37,6 +38,19 @@ export class UserFoodsService {
     return this.prisma.userFood.findUnique({
       where: {
         id: id,
+      },
+    });
+  }
+
+  async update(id: string, updateUserFoodDto: UpdateUserFoodDto) {
+    return this.prisma.userFood.update({
+      where: {
+        id: id,
+      },
+      data: {
+        timestamp: updateUserFoodDto.timestamp,
+        amount: updateUserFoodDto.amount,
+        foodId: updateUserFoodDto.foodId,
       },
     });
   }
