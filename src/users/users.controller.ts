@@ -12,10 +12,12 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UserWeightsService } from './user_weights.service';
 import { UserFoodsService } from './user_foods.service';
 import { UserExercisesService } from './user_exercises.service';
+import { PrivateGuard } from 'src/auth/guards/private.guard';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
 @Controller('users')
 export class UsersController {
@@ -31,40 +33,46 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
-  @UseGuards(new JwtAuthGuard(['admin', 'user']))
   @Get('profile')
+  @UseGuards(new JwtAuthGuard(['admin', 'user']))
   getProfile(@Request() req: any) {
     const { id } = req.user;
     return this.usersService.findOne(id);
   }
 
   @Get()
+  @UseGuards(JwtGuard)
   findAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
+  @UseGuards(JwtGuard)
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
 
   @Patch(':id')
+  @UseGuards(JwtGuard)
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
+  @UseGuards(JwtGuard)
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }
 
   // relations (weights)
   @Get(':userId/weights')
+  @UseGuards(JwtGuard, PrivateGuard)
   getUserWeights(@Param('userId') userId: string) {
     return this.userWeightsService.findAll(userId);
   }
 
   @Post(':userId/weights')
+  @UseGuards(JwtGuard, PrivateGuard)
   createUserWeight(
     @Param('userId') userId: string,
     @Body() createUserWeightDto: any,
@@ -73,11 +81,13 @@ export class UsersController {
   }
 
   @Get(':userId/weights/:id')
+  @UseGuards(JwtGuard, PrivateGuard)
   getUserWeight(@Param('id') id: string) {
     return this.userWeightsService.findOne(id);
   }
 
   @Patch(':userId/weights/:id')
+  @UseGuards(JwtGuard, PrivateGuard)
   updateUserWeight(
     @Param('userId') userId: string,
     @Param('id') id: string,
@@ -87,17 +97,20 @@ export class UsersController {
   }
 
   @Delete(':userId/weights/:id')
+  @UseGuards(JwtGuard, PrivateGuard)
   removeUserWeight(@Param('id') id: string) {
     return this.userWeightsService.remove(id);
   }
 
   // relations (foods)
   @Get(':userId/foods')
+  @UseGuards(JwtGuard, PrivateGuard)
   getUserFoods(@Param('userId') userId: string) {
     return this.userFoodsService.findAll(userId);
   }
 
   @Post(':userId/foods')
+  @UseGuards(JwtGuard, PrivateGuard)
   createUserFood(
     @Param('userId') userId: string,
     @Body() createUserFoodDto: any,
@@ -106,11 +119,13 @@ export class UsersController {
   }
 
   @Get(':userId/foods/:id')
+  @UseGuards(JwtGuard, PrivateGuard)
   getUserFood(@Param('id') id: string) {
     return this.userFoodsService.findOne(id);
   }
 
   @Patch(':userId/foods/:id')
+  @UseGuards(JwtGuard, PrivateGuard)
   updateUserFood(
     @Param('userId') userId: string,
     @Param('id') id: string,
@@ -120,17 +135,20 @@ export class UsersController {
   }
 
   @Delete(':userId/foods/:id')
+  @UseGuards(JwtGuard, PrivateGuard)
   removeUserFood(@Param('id') id: string) {
     return this.userFoodsService.remove(id);
   }
 
   // relations (exercises)
   @Get(':userId/exercises')
+  @UseGuards(JwtGuard, PrivateGuard)
   getUserExercises(@Param('userId') userId: string) {
     return this.userExercisesService.findAll(userId);
   }
 
   @Post(':userId/exercises')
+  @UseGuards(JwtGuard, PrivateGuard)
   createUserExercise(
     @Param('userId') userId: string,
     @Body() createUserExerciseDto: any,
@@ -139,11 +157,13 @@ export class UsersController {
   }
 
   @Get(':userId/exercises/:id')
+  @UseGuards(JwtGuard, PrivateGuard)
   getUserExercise(@Param('id') id: string) {
     return this.userExercisesService.findOne(id);
   }
 
   @Patch(':userId/exercises/:id')
+  @UseGuards(JwtGuard, PrivateGuard)
   updateUserExercise(
     @Param('userId') userId: string,
     @Param('id') id: string,
@@ -153,6 +173,7 @@ export class UsersController {
   }
 
   @Delete(':userId/exercises/:id')
+  @UseGuards(JwtGuard, PrivateGuard)
   removeUserExercise(@Param('id') id: string) {
     return this.userExercisesService.remove(id);
   }

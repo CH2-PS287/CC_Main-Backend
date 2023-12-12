@@ -3,8 +3,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
-import { error } from 'ps-logger';
-
 import * as argon from 'argon2';
 
 @Injectable()
@@ -55,9 +53,7 @@ export class UsersService {
       return transactionResult;
     } catch (e) {
       // If any operation fails, the transaction will be rolled back
-      error(`Transaction failed: ${e}`);
-
-      throw new Error('Transaction failed');
+      throw e;
     }
   }
 
@@ -70,7 +66,7 @@ export class UsersService {
   }
 
   async findOne(id: string) {
-    return this.prisma.user.findUnique({
+    return this.prisma.user.findUniqueOrThrow({
       where: {
         id: id,
       },
@@ -81,7 +77,7 @@ export class UsersService {
   }
 
   async findOneByEmail(email: string) {
-    return this.prisma.user.findUnique({
+    return this.prisma.user.findUniqueOrThrow({
       where: {
         email: email,
       },
