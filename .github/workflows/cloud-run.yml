@@ -10,7 +10,7 @@ env:
   PROJECT_ID: ${{ secrets.CLOUD_RUN_PROJECT_NAME }}
   REGION: asia-southeast2
   # project-name but it can be anything you want
-  REPO_NAME: cc_main-backend
+  REPO_NAME: cc-main-backend
   INSTANCE_CONNECTION_NAME: ${{ secrets.INSTANCE_CONNECTION_NAME }}
   DB_NAME: ${{ secrets.DB_NAME }}
   DB_USER: ${{ secrets.DB_USER }}
