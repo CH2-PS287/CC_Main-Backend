@@ -61,3 +61,16 @@ jobs:
             --set-env-vars DB_USER="$DB_USER" \
             --set-env-vars DB_PASS="$DB_PASS" \
             --set-env-vars DATABASE_URL="$DATABASE_URL" \
+
+      - name: Download SQL Auth Proxy
+        run: "wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy"
+    
+      - name: Make the Cloud SQL Auth proxy executable
+        run: "chmod +x cloud_sql_proxy"
+    
+      - name: Start the Cloud SQL proxy
+        run: "./cloud_sql_proxy -instances=$INSTANCE_CONNECTION_NAME & npx prisma migrate deploy"      
+
+      # If required, use the Cloud Run url output in later steps
+      - name: Show Output
+        run: echo ${{ steps.deploy.outputs.url }}
