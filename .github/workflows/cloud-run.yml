@@ -33,7 +33,7 @@ jobs:
 
       # Setup gcloud CLI/SDK
       - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0
+        uses: google-github-actions/setup-gcloud
 
       - name: Authorize Docker push
         run: gcloud auth configure-docker
@@ -60,16 +60,8 @@ jobs:
             --set-env-vars DB_NAME="$DB_NAME" \
             --set-env-vars DB_USER="$DB_USER" \
             --set-env-vars DB_PASS="$DB_PASS" \
-            --set-env-vars DATABASE_URL="$DATABASE_URL" \  
+            --set-env-vars DATABASE_URL="$DATABASE_URL" \
 
-      # If required, use the Cloud Run url output in later steps
-      - name: Show Output
-        run: echo ${{ steps.deploy.outputs.url }}
-  database-migrate:
-    name: Database Migrate
-    runs-on: ubuntu-latest
-    needs: build-and-deploy
-    steps:
       - name: Download SQL Auth Proxy
         run: "wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy"
     
@@ -77,4 +69,8 @@ jobs:
         run: "chmod +x cloud_sql_proxy"
     
       - name: Start the Cloud SQL proxy
-        run: "./cloud_sql_proxy -instances=$INSTANCE_CONNECTION_ & npx prisma migrate deploy"    
+        run: "./cloud_sql_proxy -instances=$INSTANCE_CONNECTION_ & npx prisma migrate deploy"      
+
+      # If required, use the Cloud Run url output in later steps
+      - name: Show Output
+        run: echo ${{ steps.deploy.outputs.url }}
