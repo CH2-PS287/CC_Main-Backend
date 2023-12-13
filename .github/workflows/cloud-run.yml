@@ -69,7 +69,7 @@ jobs:
         run: "chmod +x cloud_sql_proxy"
     
       - name: Start the Cloud SQL proxy
-        run: "./cloud_sql_proxy -instances=$DATABASE_URL & npx prisma migrate deploy"      
+        run: "./cloud_sql_proxy -instances=$INSTANCE_CONNECTION_NAME=tcp:5432 & npx prisma migrate deploy"      
 
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
