@@ -15,8 +15,9 @@ env:
   DB_NAME: ${{ secrets.DB_NAME }}
   DB_USER: ${{ secrets.DB_USER }}
   DB_PASS: ${{ secrets.DB_PASS }}
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  DATABASE_URL_CLOUD_RUN: ${{ secrets.DATABASE_URL }}
   DATABASE_INSTANCE: ${{ secrets.DATABASE_INSTANCE }}
+  DATABASE_URL: ${{ secrets.DATABASE_PROXY_URL }}
 
 jobs:
   build-and-deploy:
@@ -61,16 +62,13 @@ jobs:
           --set-env-vars DB_NAME="$DB_NAME" \
           --set-env-vars DB_USER="$DB_USER" \
           --set-env-vars DB_PASS="$DB_PASS" \
-          --set-env-vars DATABASE_URL="$DATABASE_URL" \
+          --set-env-vars DATABASE_URL="$DATABASE_URL_CLOUD_RUN" \
 
       - name: Download SQL Auth Proxy
         run: 'curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.8.1/cloud-sql-proxy.linux.amd64'
 
       - name: Make the Cloud SQL Auth proxy executable
         run: 'chmod +x cloud-sql-proxy'
-
-      - name: Set Database URL Environment to Cloud SQL Proxy
-        run: 'export DATABASE_URL=${{ secrets.DATABASE_PROXY_URL }}'
 
       - name: Start the Cloud SQL proxy
         run: './cloud-sql-proxy $DATABASE_INSTANCE & npx prisma migrate deploy'
