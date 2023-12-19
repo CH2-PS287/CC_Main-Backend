@@ -1,3 +1,4 @@
+name: prisma-db-migrate
 on: workflow_dispatch
 
 env:
