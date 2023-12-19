@@ -7,7 +7,7 @@ env:
   # project-name but it can be anything you want
   REPO_NAME: cc-main-backend
   INSTANCE_CONNECTION_NAME: ${{ secrets.INSTANCE_CONNECTION_NAME }}
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  DATABASE_URL: ${{ secrets.DATABASE_PROXY_URL }}
   DATABASE_INSTANCE: ${{ secrets.DATABASE_INSTANCE }}
 
 jobs:
@@ -36,7 +36,3 @@ jobs:
 
       - name: Start the Cloud SQL proxy
         run: './cloud-sql-proxy $DATABASE_INSTANCE & npx prisma migrate deploy'
-
-      # If required, use the Cloud Run url output in later steps
-      - name: Show Output
-        run: echo ${{ steps.deploy.outputs.url }}

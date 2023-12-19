@@ -69,9 +69,8 @@ jobs:
       - name: Make the Cloud SQL Auth proxy executable
         run: 'chmod +x cloud-sql-proxy'
 
+      - name: Switch Database URL to Cloud SQL Proxy
+        run: 'DATABASE_URL=${{ secrets.DATABASE_PROXY_URL }}'
+
       - name: Start the Cloud SQL proxy
         run: './cloud-sql-proxy $DATABASE_INSTANCE & npx prisma migrate deploy'
-
-      # If required, use the Cloud Run url output in later steps
-      - name: Show Output
-        run: echo ${{ steps.deploy.outputs.url }}
