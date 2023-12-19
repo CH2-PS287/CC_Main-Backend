@@ -7,6 +7,7 @@ env:
   # project-name but it can be anything you want
   REPO_NAME: cc-main-backend
   INSTANCE_CONNECTION_NAME: ${{ secrets.INSTANCE_CONNECTION_NAME }}
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
   DATABASE_INSTANCE: ${{ secrets.DATABASE_INSTANCE }}
 
 jobs:
