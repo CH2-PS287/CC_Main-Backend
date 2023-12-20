@@ -11,8 +11,8 @@ export class ExercisesService {
     return this.prisma.exercise.create({
       data: {
         calorie: createExerciseDto.calorie,
-        name: createExerciseDto.name,
-        unit: createExerciseDto.unit,
+        activity: createExerciseDto.activity,
+        label: createExerciseDto.label,
       },
     });
   }
@@ -30,8 +30,8 @@ export class ExercisesService {
       where: { id: id },
       data: {
         calorie: updateExerciseDto.calorie,
-        name: updateExerciseDto.name,
-        unit: updateExerciseDto.unit,
+        activity: updateExerciseDto.activity,
+        label: updateExerciseDto.label,
       },
     });
   }
