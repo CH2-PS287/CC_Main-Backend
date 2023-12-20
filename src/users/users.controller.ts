@@ -12,6 +12,7 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserProfileDto } from './dto/update-user-profile.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UserWeightsService } from './user_weights.service';
 import { UserFoodsService } from './user_foods.service';
@@ -38,6 +39,20 @@ export class UsersController {
   getProfile(@Request() req: any) {
     const { id } = req.user;
     return this.usersService.findOne(id);
+  }
+
+  @Patch('profile/:id')
+  @UseGuards(JwtGuard)
+  async updateProfile(
+    @Param('id') id: string,
+    @Body() userProfileDto: UserProfileDto,
+  ) {
+    const data = await this.usersService.updateProfile(id, userProfileDto);
+    return {
+      error: false,
+      message: 'User Updated',
+      result: data,
+    };
   }
 
   @Get()
