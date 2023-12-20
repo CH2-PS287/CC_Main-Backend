@@ -24,7 +24,11 @@ export class AuthService {
         email: user.email,
       });
 
-      return token;
+      return {
+        userId: user.id,
+        email: user.email,
+        token: token,
+      };
     }
     throw new UnauthorizedException();
   }
@@ -55,8 +59,6 @@ export class AuthService {
       secret: jwtConstants.secret,
     });
 
-    return {
-      access_token: token,
-    };
+    return token;
   }
 }

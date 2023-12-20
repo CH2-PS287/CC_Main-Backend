@@ -9,6 +9,11 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('sign-in')
   async signIn(@Body() signInDto: SignInDto) {
-    return this.authService.signIn(signInDto);
+    const data = await this.authService.signIn(signInDto);
+    return {
+      error: false,
+      message: 'success',
+      result: data,
+    };
   }
 }
