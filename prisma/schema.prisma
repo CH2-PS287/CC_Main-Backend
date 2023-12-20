@@ -29,11 +29,11 @@ model User {
 model UserData {
   id String @id @default(uuid())
   full_name String
-	birth_date DateTime
-	height Float
-	weight Float
-	gender Gender
-	recommended_calorie Int
+	birth_date DateTime?
+	height Float?
+	weight Float?
+	gender Gender?
+	recommended_calorie Int?
 
   user User @relation(fields: [userId], references: [id])
   userId String @unique
