@@ -16,6 +16,7 @@
   - Added the required column `karbohidrat` to the `foods` table without a default value. This is not possible if the table is not empty.
   - Added the required column `kolesterol` to the `foods` table without a default value. This is not possible if the table is not empty.
   - Added the required column `kolina` to the `foods` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `label` to the `foods` table without a default value. This is not possible if the table is not empty.
   - Added the required column `lemak` to the `foods` table without a default value. This is not possible if the table is not empty.
   - Added the required column `lemak_ganda` to the `foods` table without a default value. This is not possible if the table is not empty.
   - Added the required column `lemak_jenuh` to the `foods` table without a default value. This is not possible if the table is not empty.
@@ -61,6 +62,7 @@ ADD COLUMN     "kalsium_ca" DOUBLE PRECISION NOT NULL,
 ADD COLUMN     "karbohidrat" DOUBLE PRECISION NOT NULL,
 ADD COLUMN     "kolesterol" DOUBLE PRECISION NOT NULL,
 ADD COLUMN     "kolina" DOUBLE PRECISION NOT NULL,
+ADD COLUMN     "label" TEXT NOT NULL,
 ADD COLUMN     "lemak" DOUBLE PRECISION NOT NULL,
 ADD COLUMN     "lemak_ganda" DOUBLE PRECISION NOT NULL,
 ADD COLUMN     "lemak_jenuh" DOUBLE PRECISION NOT NULL,
