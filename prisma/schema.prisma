@@ -102,9 +102,9 @@ model Food {
 
 model Exercise {
   id String @id @default(uuid())
-  name String
-  calorie Float
-  unit String
+  label Int
+  activity String
+  calorie Float 
 
   createdAt DateTime @default(now())
 
