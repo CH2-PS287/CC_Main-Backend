@@ -44,10 +44,53 @@ model UserData {
 model Food {
   id String @id @default(uuid())
   name String
+  label String
   calorie Float
   mineral Float
-  protein Float
   fiber Float
+  air Float
+  energi Float
+  protein Float
+  lemak Float
+  abu Float
+  karbohidrat Float
+  serat_total Float
+  gula_total Float
+  kalsium_ca Float
+  besi_fe Float
+  magnesium_mg Float
+  fosfor_p Float
+  kalium_k Float
+  natrium_na Float
+  seng_zn Float
+  tembaga_cu Float
+  mangan_mn Float
+  selenium_se Float
+  vitamin_c Float
+  tiamina_b1 Float
+  riboflavin_b2 Float
+  niasin Float
+  pantotenat_b5 Float
+  vitamin_b6 Float
+  folat_total_b9 Float
+  kolina Float
+  vitamin_b12 Float
+  vitamin_a_iu Float
+  vitamin_a_rae Float
+  retinol Float
+  a_karoten Float
+  b_karoten Float
+  b_kriptosantin Float
+  likopen Float
+  zeaksantin_lutein Float
+  vitamin_e Float
+  vitamin_d Float
+  vitamin_d_iu Float
+  vitamin_k Float
+  lemak_jenuh Float
+  lemak_tunggal Float
+  lemak_ganda Float
+  kolesterol Float
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
