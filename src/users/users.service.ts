@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { UserProfileDto } from './dto/update-user-profile.dto';
 
 import * as argon from 'argon2';
 
@@ -97,6 +98,28 @@ export class UsersService {
         password: updateUserDto.password,
       },
     });
+  }
+
+  async updateProfile(id: string, userProfileDto: UserProfileDto) {
+    // Create user data within the transaction
+    const { userData } = await this.findOne(id);
+
+    // const birthDate = new Date(userProfileDto.birth_date);
+
+    await this.prisma.userData.update({
+      where: {
+        id: userData?.id,
+      },
+      data: {
+        // birth_date: birthDate,
+        age: userProfileDto.age,
+        gender: userProfileDto.gender,
+        height: userProfileDto.height,
+        weight: userProfileDto.weight,
+        recommended_calorie: userProfileDto.recommended_calorie,
+      },
+    });
+    return userData;
   }
 
   async remove(id: string) {
