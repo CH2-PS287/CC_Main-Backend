@@ -41,12 +41,14 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
-  @Patch('profile/:id')
+  @Patch('profile')
   @UseGuards(JwtGuard)
   async updateProfile(
-    @Param('id') id: string,
     @Body() userProfileDto: UserProfileDto,
+    @Request() req: any,
   ) {
+    const { id } = req.user;
+
     const data = await this.usersService.updateProfile(id, userProfileDto);
     return {
       error: false,
