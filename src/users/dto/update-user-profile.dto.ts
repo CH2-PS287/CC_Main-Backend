@@ -1,10 +1,10 @@
 import { Gender } from '@prisma/client';
-import { IsDateString, IsEnum, IsNotEmpty, IsNumber } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class UserProfileDto {
-  @IsNotEmpty()
-  @IsDateString()
-  birth_date: Date;
+  // @IsNotEmpty()
+  // @IsDateString()
+  // birth_date: Date;
 
   @IsNotEmpty()
   @IsNumber()
@@ -18,7 +18,9 @@ export class UserProfileDto {
   @IsEnum(Gender)
   gender: Gender;
 
+  recommended_calorie: number;
+
   @IsNotEmpty()
   @IsNumber()
-  recommended_calorie: number;
+  age: number;
 }

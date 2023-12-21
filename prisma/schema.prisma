@@ -17,7 +17,6 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-
   userData UserData?
   userFood UserFood[]
   userExercise UserExercise[]
@@ -33,6 +32,7 @@ model UserData {
 	height Float?
 	weight Float?
 	gender Gender?
+  age    Int?
 	recommended_calorie Int?
 
   user User @relation(fields: [userId], references: [id])

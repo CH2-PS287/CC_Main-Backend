@@ -104,14 +104,15 @@ export class UsersService {
     // Create user data within the transaction
     const { userData } = await this.findOne(id);
 
-    const birthDate = new Date(userProfileDto.birth_date);
+    // const birthDate = new Date(userProfileDto.birth_date);
 
     await this.prisma.userData.update({
       where: {
         id: userData?.id,
       },
       data: {
-        birth_date: birthDate,
+        // birth_date: birthDate,
+        age: userProfileDto.age,
         gender: userProfileDto.gender,
         height: userProfileDto.height,
         weight: userProfileDto.weight,
