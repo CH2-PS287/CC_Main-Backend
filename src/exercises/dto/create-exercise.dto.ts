@@ -3,13 +3,13 @@ import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 export class CreateExerciseDto {
   @IsNotEmpty()
   @IsString()
-  name: string;
+  activity: string;
 
   @IsNotEmpty()
   @IsNumber()
   calorie: number;
 
   @IsNotEmpty()
-  @IsString()
-  unit: string;
+  @IsNumber()
+  label: number;
 }
