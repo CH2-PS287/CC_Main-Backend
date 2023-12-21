@@ -86,4 +86,12 @@ export class FoodsService {
   async remove(id: string) {
     return this.prisma.food.delete({ where: { id: id } });
   }
+
+  async recommendation(userId: string) {
+    return this.prisma.userFood.findMany({
+      where: {
+        userId: userId,
+      },
+    });
+  }
 }

@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Request,
 } from '@nestjs/common';
 import { FoodsService } from './foods.service';
 import { CreateFoodDto } from './dto/create-food.dto';
@@ -21,8 +22,27 @@ export class FoodsController {
   }
 
   @Get()
-  findAll() {
-    return this.foodsService.findAll();
+  async findAll() {
+    const data = await this.foodsService.findAll();
+    console.log(data);
+    return {
+      error: false,
+      message: 'success',
+      result: data,
+    };
+  }
+
+  @Get('/recomendation')
+  async recomendation(@Request() req: any) {
+    const { user } = req;
+    console.log(user);
+    // const data = await this.foodsService.recommendation();
+    // console.log(data);
+    return {
+      error: false,
+      message: 'success',
+      // result: data,
+    };
   }
 
   @Get(':id')

@@ -12,6 +12,7 @@ export class UserFoodsService {
       data: {
         timestamp: createUserFoodDto.timestamp,
         amount: createUserFoodDto.amount,
+        cycleTime: createUserFoodDto.cycleTime,
         food: {
           connect: {
             id: createUserFoodDto.foodId,
