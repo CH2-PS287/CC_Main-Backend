@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateFoodDto } from './dto/create-food.dto';
 import { UpdateFoodDto } from './dto/update-food.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Food, UserFood } from '@prisma/client';
 
 @Injectable()
 export class FoodsService {
@@ -88,10 +89,75 @@ export class FoodsService {
   }
 
   async recommendation(userId: string) {
-    return this.prisma.userFood.findMany({
+    const data = await this.prisma.userFood.findMany({
       where: {
         userId: userId,
       },
+      include: {
+        food: true, // Menambahkan informasi terkait dengan tabel food
+      },
     });
+    const totalFood: CreateFoodDto = {
+      mineral: 0,
+      fiber: 0,
+      calorie: 0,
+      label: '',
+      name: '',
+      air: 0,
+      energi: 0,
+      protein: 0,
+      lemak: 0,
+      abu: 0,
+      karbohidrat: 0,
+      serat_total: 0,
+      gula_total: 0,
+      kalsium_ca: 0,
+      besi_fe: 0,
+      magnesium_mg: 0,
+      fosfor_p: 0,
+      kalium_k: 0,
+      natrium_na: 0,
+      seng_zn: 0,
+      tembaga_cu: 0,
+      mangan_mn: 0,
+      selenium_se: 0,
+      vitamin_c: 0,
+      tiamina_b1: 0,
+      riboflavin_b2: 0,
+      niasin: 0,
+      pantotenat_b5: 0,
+      vitamin_b6: 0,
+      folat_total_b9: 0,
+      kolina: 0,
+      vitamin_b12: 0,
+      vitamin_a_iu: 0,
+      vitamin_a_rae: 0,
+      retinol: 0,
+      a_karoten: 0,
+      b_karoten: 0,
+      b_kriptosantin: 0,
+      likopen: 0,
+      zeaksantin_lutein: 0,
+      vitamin_d_iu: 0,
+      vitamin_k: 0,
+      lemak_jenuh: 0,
+      lemak_tunggal: 0,
+      lemak_ganda: 0,
+      kolesterol: 0,
+      vitamin_e: 0,
+      vitamin_d: 0,
+    };
+
+    await Promise.all(
+      data.map(async (record: any) => {
+        const food: Food = record.food;
+        console.log(food.a_karoten);
+        totalFood.a_karoten += +food.a_karoten || 0;
+        totalFood.air += +food.air || 0;
+        return food;
+      }),
+    );
+
+    return totalFood;
   }
 }

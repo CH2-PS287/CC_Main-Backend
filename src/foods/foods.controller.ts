@@ -6,11 +6,13 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
   Request,
 } from '@nestjs/common';
 import { FoodsService } from './foods.service';
 import { CreateFoodDto } from './dto/create-food.dto';
 import { UpdateFoodDto } from './dto/update-food.dto';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
 @Controller('foods')
 export class FoodsController {
@@ -32,16 +34,17 @@ export class FoodsController {
     };
   }
 
+  @UseGuards(JwtGuard)
   @Get('/recomendation')
   async recomendation(@Request() req: any) {
     const { user } = req;
-    console.log(user);
-    // const data = await this.foodsService.recommendation();
-    // console.log(data);
+
+    const data = await this.foodsService.recommendation(user.id);
+
     return {
       error: false,
       message: 'success',
-      // result: data,
+      result: data,
     };
   }
 
