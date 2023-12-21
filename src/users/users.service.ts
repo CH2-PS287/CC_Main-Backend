@@ -106,7 +106,7 @@ export class UsersService {
 
     // const birthDate = new Date(userProfileDto.birth_date);
 
-    await this.prisma.userData.update({
+    const data = await this.prisma.userData.update({
       where: {
         id: userData?.id,
       },
@@ -119,7 +119,7 @@ export class UsersService {
         recommended_calorie: userProfileDto.recommended_calorie,
       },
     });
-    return userData;
+    return data;
   }
 
   async remove(id: string) {
