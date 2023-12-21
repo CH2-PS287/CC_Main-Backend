@@ -160,6 +160,6 @@ model UserWeight {
 }
 
 enum Gender {
-  MALE
-  FEMALE
+  Pria
+  Wanita
 }
