@@ -168,4 +168,7 @@ enum CycleTime {
   MORNING
   AFTERNOON
   EVENING
+  Pagi
+  Siang
+  Malam
 }

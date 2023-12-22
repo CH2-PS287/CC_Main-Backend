@@ -26,7 +26,7 @@ export class FoodsController {
   @Get()
   async findAll() {
     const data = await this.foodsService.findAll();
-    console.log(data);
+
     return {
       error: false,
       message: 'success',
@@ -38,8 +38,12 @@ export class FoodsController {
   @Get('/recomendation')
   async recomendation(@Request() req: any) {
     const { user } = req;
+    const authorizationHeader = req.headers.authorization;
 
-    const data = await this.foodsService.recommendation(user.id);
+    const data = await this.foodsService.recommendation(
+      user.id,
+      authorizationHeader,
+    );
 
     return {
       error: false,
