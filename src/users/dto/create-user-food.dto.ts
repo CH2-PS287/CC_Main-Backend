@@ -1,7 +1,8 @@
+import { CycleTime } from '@prisma/client';
 import {
   IsDateString,
   IsNotEmpty,
-  IsNumber,
+  IsEnum,
   IsOptional,
   IsString,
 } from 'class-validator';
@@ -11,9 +12,11 @@ export class CreateUserFoodDto {
   @IsDateString()
   timestamp: Date;
 
-  @IsNotEmpty()
-  @IsNumber()
   amount: number;
+
+  @IsNotEmpty()
+  @IsEnum(CycleTime)
+  cycleTime: CycleTime;
 
   @IsNotEmpty()
   @IsString()

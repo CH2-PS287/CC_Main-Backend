@@ -6,10 +6,13 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
 import { FoodsService } from './foods.service';
 import { CreateFoodDto } from './dto/create-food.dto';
 import { UpdateFoodDto } from './dto/update-food.dto';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
 @Controller('foods')
 export class FoodsController {
@@ -21,8 +24,32 @@ export class FoodsController {
   }
 
   @Get()
-  findAll() {
-    return this.foodsService.findAll();
+  async findAll() {
+    const data = await this.foodsService.findAll();
+
+    return {
+      error: false,
+      message: 'success',
+      result: data,
+    };
+  }
+
+  @UseGuards(JwtGuard)
+  @Get('/recomendation')
+  async recomendation(@Request() req: any) {
+    const { user } = req;
+    const authorizationHeader = req.headers.authorization;
+
+    const data = await this.foodsService.recommendation(
+      user.id,
+      authorizationHeader,
+    );
+
+    return {
+      error: false,
+      message: 'success',
+      result: data,
+    };
   }
 
   @Get(':id')
